@@ -21,6 +21,16 @@ You can use the OctoPrint integration with this add-on. Go to Home Assistant, ad
 
 Go to OctoPrint WebUI, you should see a request for authentication.
 
+# Plugins & upgrades
+
+Plugins you install from the OctoPrint UI are stored in `/data/plugins` and survive add-on restarts and updates. The OctoPrint base itself is baked into the image under `/opt/octoprint`, so it is replaced cleanly on every update.
+
+When upgrading from an older version of this add-on, your existing plugins are migrated automatically on first boot. The old install at `/data/python/octoprint` is removed once the migration completes.
+
+If a plugin could not be reinstalled during migration, it is listed in `/data/plugins/migration-report.txt`. Check that file after an upgrade and reinstall any failed plugins manually from the OctoPrint UI.
+
+When the base Python version of the add-on changes, plugins with compiled extensions are rebuilt automatically on the next start.
+
 # Camera
 
 This add-on does not include a camera server, that has to be installed and setup separately.

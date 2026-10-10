@@ -1,3 +1,9 @@
+## 2026.10.0
+  * Fix broken in-place upgrade on trixie / Python 3.13 (ModuleNotFoundError octoprint/pip)
+  * Split base and plugins: OctoPrint base is now baked into the image at /opt/octoprint, user plugins persist in /data/plugins via pip user-site
+  * Auto-migrate legacy /data/python/octoprint installs on first boot, with a metadata-scan fallback when the old venv is broken
+  * Auto-rebuild compiled extensions when the base Python version changes
+
 ## 2025.12.0
   * Update base image to debian trixie
   * Update default OctoPrint version to 1.11.4

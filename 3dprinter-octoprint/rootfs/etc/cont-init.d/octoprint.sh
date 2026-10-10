@@ -1,22 +1,17 @@
 #!/usr/bin/with-contenv bashio
 # ==============================================================================
-# Prepare OctoPrint
+# Prepare OctoPrint (split base/plugins)
 # s6-overlay docs: https://github.com/just-containers/s6-overlay
 # ==============================================================================
 export BASEDIR="--basedir /data/config/octoprint"
 
-{ # Check if OctoPrint is installed.
-    octoprint $BASEDIR --version
-} || { # Otherwise install it.
-    { # Check if Python is available (at `/data/python/octoprint`, set by PATH in Dockerfile)
-        python --version
-    } || { # Otherwise create Python virtual environment.
-        python3 -m venv /data/python/octoprint
-        # Install wheel to speed up future installs.
-        pip install wheel
-    }
-    pip install octoprint==$OCTOPRINT_VERSION
-}
+if ! octoprint $BASEDIR --version; then
+    bashio::log.fatal "OctoPrint base installation is missing or non-functional!"
+    exit 1
+fi
+
+bashio::log.info "Checking OctoPrint plugin state / data migration..."
+bash /scripts/migrate_octoprint_data.sh
 
 # Create initial OctoPrint config, if missing.
 if [ ! -f /data/config/octoprint/config.yaml ]; then
