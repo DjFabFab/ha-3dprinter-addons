@@ -106,10 +106,12 @@ sandbox_init() {
     export PYVERSION_STAMP="$PYTHONUSERBASE/.octoprint-python-version"
     export MIGRATION_MARKER="$PYTHONUSERBASE/.octoprint-legacy-migrated"
     export REPORT="$PYTHONUSERBASE/migration-report.txt"
-    # PY = the *current* runtime interpreter (resolves the user site / version).
-    # The legacy interpreter is only ever reached inside freeze_legacy() via
-    # $LEGACY_DIR/bin/python, which stays dangling by design.
-    export PY="${RUNTIME_PY:-$(command -v python3)}"
+    # PY must be the legacy interpreter (dangling by design) so freeze_legacy()
+    # deterministically fails and exercises the metadata-scan fallback on
+    # every host. It must NOT point at the runtime python3: the migration
+    # script defaults PY only at source time, and with set -u an unset PY
+    # is fatal inside freeze_legacy().
+    export PY="$LEGACY_DIR/bin/python"
     export PIP_BIN="$SANDBOX/bin/pip-logger"
     export PIP_LOG="$SANDBOX/pip.log"
     mkdir -p "$LEGACY_DIR/bin" "$PYTHONUSERBASE" "$SANDBOX/bin"
