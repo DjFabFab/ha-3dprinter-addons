@@ -3,6 +3,7 @@
   * Split base and plugins: OctoPrint base is now baked into the image at /opt/octoprint, user plugins persist in /data/plugins via pip user-site
   * Auto-migrate legacy /data/python/octoprint installs on first boot, with a metadata-scan fallback when the old venv is broken
   * Auto-rebuild compiled extensions when the base Python version changes
+  * Drop 32-bit ARM images (armv7/armhf): the HA builder only supports amd64/aarch64
 
 ## 2025.12.0
   * Update base image to debian trixie
