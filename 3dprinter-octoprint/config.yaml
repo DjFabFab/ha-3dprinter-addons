@@ -3,7 +3,6 @@ version: "2026.10.0"
 slug: "3dprinter-octoprint"
 description: "OctoPrint as an addon, no additional bells and whistles."
 arch:
-  - armv7
   - amd64
   - armhf
   - aarch64
