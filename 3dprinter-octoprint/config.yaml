@@ -4,7 +4,6 @@ slug: "3dprinter-octoprint"
 description: "OctoPrint as an addon, no additional bells and whistles."
 arch:
   - amd64
-  - armhf
   - aarch64
 url: "https://github.com/fredrikbaberg/ha-3dprinter-addons/tree/main/3dprinter-octoprint"
 webui: http://[HOST]:[PORT:5000]
