@@ -5,18 +5,8 @@ ARG OCTOPRINT_VERSION="1.11.4"
 # OctoPrint version baked into the image
 ENV OCTOPRINT_VERSION=${OCTOPRINT_VERSION}
 
-# Preparation for install of Caddy
-RUN apt update \
-    && apt install -y \
-    --no-install-recommends \
-    debian-keyring \
-    debian-archive-keyring \
-    apt-transport-https \
-    gpg \
-    && curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/gpg.key' | gpg --dearmor -o /usr/share/keyrings/caddy-stable-archive-keyring.gpg \
-    && curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/debian.deb.txt' | tee /etc/apt/sources.list.d/caddy-stable.list
-
-# Install dependencies
+# Install dependencies (caddy comes from Debian trixie main; the old
+# Cloudsmith repo is gone - it returns 402 Payment Required).
 RUN apt update \
     && apt install -y \
         --no-install-recommends \
